@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">O2 Slovakia Android home assignment</string>
+
+    <string name="not_scratched">Not scratched</string>
+    <string name="scratching">Scratching</string>
+    <string name="scratch">Scratch!</string>
+    <string name="activate">Activate!</string>
+    <string name="activation">Activation</string>
+    <string name="go_to_scratching">Go to scratching</string>
+    <string name="go_to_activation">Go to activation</string>
+    <string name="card_scratch_app">Card Scratch App</string>
+    <string name="not_activated">Not activated</string>
+    <string name="activated">Activated</string>
+    <string name="activation_error">Activation error</string>
+</resources>
