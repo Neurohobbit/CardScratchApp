@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
+    id("org.jlleitschuh.gradle.ktlint") version "11.5.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
 android {
@@ -91,4 +93,37 @@ dependencies {
 
     // Logger
     implementation(libs.timber)
+}
+
+ktlint {
+    android.set(true)
+    outputColorName.set("RED")
+    ignoreFailures.set(false)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+}
+
+detekt {
+    toolVersion = "1.23.8"
+    buildUponDefaultConfig = true
+    allRules = false
+    parallel = true
+
+    config = files("$rootDir/config/detekt/detekt.yml")
+
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        txt.required.set(false)
+    }
+}
+
+tasks.register("lintAll") {
+    group = "verification"
+    description = "Run KtLint and Detekt sequentially"
+
+    dependsOn("ktlintCheck")
+    dependsOn("detekt")
 }
