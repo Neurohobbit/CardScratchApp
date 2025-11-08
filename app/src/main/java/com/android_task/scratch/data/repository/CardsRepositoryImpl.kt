@@ -48,13 +48,17 @@ class CardsRepositoryImpl @Inject constructor(
                     ?: throw Exception("Empty response body (code: ${response.code()})")
                 if (!response.isSuccessful) throw Exception("Server error: ${response.code()}")
 
-                _card.emit(
-                    _card.value.copy(
-                        isActivated = true
+                val androidCode = body.android.toIntOrNull()
+                if (androidCode != null && androidCode > ERROR_BORDER) {
+                    throw Exception("Android code more than $ERROR_BORDER")
+                } else {
+                    _card.emit(
+                        _card.value.copy(
+                            isActivated = true
+                        )
                     )
-                )
-
-                body
+                    return@runCatching body
+                }
             }
         )
     }.flowOn(Dispatchers.IO)
@@ -65,5 +69,9 @@ class CardsRepositoryImpl @Inject constructor(
                 isScratchingNow = isScratching
             )
         )
+    }
+
+    companion object {
+        const val ERROR_BORDER = 277028
     }
 }

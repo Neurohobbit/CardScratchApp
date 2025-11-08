@@ -6,8 +6,11 @@ import com.android_task.scratch.domain.usecase.ActivateCardUseCase
 import com.android_task.scratch.domain.usecase.GetCardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +23,9 @@ class ActivationViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(ActivationState())
     val uiState: StateFlow<ActivationState> get() = _uiState.asStateFlow()
+
+    private val _uiAction = MutableSharedFlow<ActivationAction>()
+    val uiAction: SharedFlow<ActivationAction> get() = _uiAction.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -44,6 +50,10 @@ class ActivationViewModel @Inject constructor(
                         error = it.error
                     )
                 )
+
+                if (it.error != null) {
+                    _uiAction.emit(ActivationAction.ShowActivationError(it.error))
+                }
             }
         }
     }

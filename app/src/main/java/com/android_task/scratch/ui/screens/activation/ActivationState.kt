@@ -11,3 +11,7 @@ data class ActivationState(
     val activationButtonEnabled: Boolean
         get() = !isActivatingNow && !isActive
 }
+
+sealed class ActivationAction {
+    data class ShowActivationError(val error: String) : ActivationAction()
+}

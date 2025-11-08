@@ -17,7 +17,7 @@ class ActivateCardUseCase @Inject constructor(
                     error = if (it.exceptionOrNull() == null)
                         null
                     else
-                        it.exceptionOrNull().toString()
+                        it.exceptionOrNull()?.message
                 )
             }
 }
