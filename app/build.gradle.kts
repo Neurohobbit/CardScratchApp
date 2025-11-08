@@ -12,7 +12,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.android_task.scratch"
+        applicationId = "com.androidtask.scratch"
         minSdk = 23
         targetSdk = 35
         versionCode = 1
@@ -24,7 +24,7 @@ android {
         }
     }
 
-    namespace = "com.android_task.scratch"
+    namespace = "com.androidtask.scratch"
 
     flavorDimensions += "version"
     productFlavors {
@@ -36,7 +36,10 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
